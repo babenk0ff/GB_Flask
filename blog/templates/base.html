@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+          rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}">
+    </script>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+{# Navbar #}
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-3">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index_app.index') }}">Blog</a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a href="{{ url_for('users_app.list') }}"
+                   class="nav-link {% if request.endpoint == 'users_app.list' %}active{% endif %}">
+                    Users
+                </a>
+            </div>
+            <div class="navbar-nav">
+                <a href="{{ url_for('articles_app.list') }}"
+                   class="nav-link {% if request.endpoint == 'articles_app.list' %}active{% endif %}">
+                    Articles
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% block body %}
+        Hello base!
+    {% endblock body %}
+
+    {% block js %}
+        <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    {% endblock js %}
+</div>
+</body>
+</html>
