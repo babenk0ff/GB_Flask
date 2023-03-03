@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <h2 class="mb-3">{{ title }}</h2>
+    <p class="mb-3">{{ body }}</p>
+    <p class="text-end fst-italic">- {{ author }}</p>
+    <div>
+        <a href="{{ url_for('articles_app.list') }}">Back to articles list</a>
+    </div>
+{% endblock %}
