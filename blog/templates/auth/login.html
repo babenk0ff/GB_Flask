@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login as
+{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+    {#    <div class="position-absolute top-0 start-50">#}
+    <div class="form-signin w-100 m-auto">
+        <form method="post" class="border rounded p-4">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        name="username"
+                        placeholder="Enter username"
+                        required
+                >
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+    {#    </div>#}
+
+{% endblock %}
