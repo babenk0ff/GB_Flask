@@ -6,7 +6,7 @@ from blog.views.auth import auth_app, login_manager
 from blog.views.index import index_app
 from blog.views.users import users_app
 
-from blog.models.database import db
+from blog.models.database import db, migrate
 from blog import commands
 
 
@@ -15,6 +15,7 @@ def create_app() -> Flask:
     app.config.from_object('blog.config')
 
     db.init_app(app)
+    migrate.init_app(app, db, compare_type=True)
     login_manager.init_app(app)
 
     register_blueprints(app)

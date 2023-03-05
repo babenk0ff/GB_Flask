@@ -1,0 +1,12 @@
+venv
+.gitignore
+
+.env-sample
+.env.prod
+.env.prod-sample
+.env.prod.db
+.env.prod.db-sample
+
+docker-compose.yml
+Dockerfile
+

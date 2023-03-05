@@ -1,0 +1,35 @@
+version: '3.5'
+
+services:
+
+  app:
+    build:
+      context: .
+    image: app
+    container_name: app
+    env_file:
+      - ./.env.prod
+    ports:
+      - "5000:5000"
+    command: ["python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:13.1-alpine
+    container_name: app_db
+    env_file:
+      - ./.env.prod.db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data: null
