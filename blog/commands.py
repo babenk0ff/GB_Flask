@@ -1,31 +1,26 @@
+import os
+
 import click
-from werkzeug.security import generate_password_hash
+import sqlalchemy.exc
+
 from blog.models.database import db
 
 
-@click.command('init-db')
-def init_db():
-    db.create_all()
-    print('Database created')
-
-
-@click.command('create-users')
-def create_users():
+@click.command('create-admin')
+def create_admin():
     from blog.models import User
     admin = User(
         username='admin',
-        email='admin@mail.local',
-        password=generate_password_hash('qwerty'),
-        is_staff=True
-    )
-    james = User(
-        username='james',
-        email='james@mail.local',
-        password=generate_password_hash('james')
+        email=os.getenv('ADMIN_EMAIL') or 'admin@admin.local',
+        password=os.getenv('ADMIN_PASSWORD') or 'admin',
+        is_staff=True,
     )
 
     db.session.add(admin)
-    db.session.add(james)
-    db.session.commit()
-
-    print('Created users:', admin, james)
+    try:
+        db.session.commit()
+    except sqlalchemy.exc.IntegrityError as e:
+        print(e)
+        db.session.close()
+    else:
+        print('Created admin')

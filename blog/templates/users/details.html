@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block body %}
-    <h2 class="mb-3">{{ user.username }}</h2>
-    {% if user.is_staff %}
-        <span class="badge bg-secondary">staff</span>
-    {% endif %}
+    <span>
+        <h2 class="mb-3">{{ user.first_name }} {{ user.last_name }}</h2>
+        {% if user.is_staff %}
+            <span class="badge bg-secondary">staff</span>
+        {% endif %}
+    </span>
+    <p class="mb-3">{{ user.email }}</p>
     <div>
         <a href="{{ url_for('users_app.list') }}">Back to users list</a>
     </div>
