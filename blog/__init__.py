@@ -1,5 +1,5 @@
 from flask import Flask
-
+from flask_wtf import CSRFProtect
 
 from blog.views.articles import articles_app
 from blog.views.auth import auth_app, login_manager
@@ -16,7 +16,11 @@ def create_app() -> Flask:
 
     db.init_app(app)
     migrate.init_app(app, db, compare_type=True)
+
     login_manager.init_app(app)
+
+    csrf = CSRFProtect()
+    csrf.init_app(app)
 
     register_blueprints(app)
     register_commands(app)
@@ -31,5 +35,4 @@ def register_blueprints(app: Flask):
 
 
 def register_commands(app: Flask):
-    app.cli.add_command(commands.init_db)
-    app.cli.add_command(commands.create_users)
+    app.cli.add_command(commands.create_admin)
