@@ -8,7 +8,19 @@
     <h1>{{ article.title }}</h1>
     <div>
         <p>{{ article.body }}</p>
-        <div>Published {{ article.dt_created }}</div>
-        <div>by {{ article.author.user.username }}</div>
+        <div class="text-secondary">Published {{ article.dt_created }}</div>
+        <div class="text-secondary">by {{ article.author.user.username }}</div>
     </div>
+    {% if article.tags %}
+        <div>
+            Tags:
+            {% for tag in article.tags %}
+                <span>
+                    <a class="badge bg-info text-dark text-decoration-none"
+                       href="{{ url_for('articles_app.list', tag=tag.name) }}">{{ tag.name }}
+                    </a>
+                </span>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
