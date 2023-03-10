@@ -3,6 +3,7 @@ from flask_wtf import CSRFProtect
 
 from blog.views.articles import articles_app
 from blog.views.auth import auth_app, login_manager
+from blog.views.authors import authors_app
 from blog.views.index import index_app
 from blog.views.users import users_app
 
@@ -32,6 +33,7 @@ def register_blueprints(app: Flask):
     app.register_blueprint(users_app)
     app.register_blueprint(articles_app)
     app.register_blueprint(auth_app)
+    app.register_blueprint(authors_app)
 
 
 def register_commands(app: Flask):
