@@ -6,6 +6,10 @@
 
 {% block body %}
     <h1>Articles</h1>
+    {% if tag %}
+        With tag:
+        <span class="badge bg-info text-dark mb-3">{{ tag }}</span>
+    {% endif %}
     <div>
         <ul>
             {% for article in articles %}
