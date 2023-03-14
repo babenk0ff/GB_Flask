@@ -28,3 +28,6 @@ class User(db.Model, UserMixin):
 
     def validate_password(self, password) -> bool:
         return check_password_hash(self._password, password)
+
+    def __str__(self):
+        return self.username

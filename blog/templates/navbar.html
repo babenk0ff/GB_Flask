@@ -44,6 +44,15 @@
                                     Profile
                                 </a>
                             </li>
+                            {% if current_user.is_staff %}
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="{{ url_for('admin.index') }}">
+                                        Admin panel
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <hr class="mt-2 mb-2">
                             <li>
                                 <a class="dropdown-item" href="{{ url_for('auth_app.logout') }}">
                                     Logout

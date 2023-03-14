@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_wtf import CSRFProtect
 
+from blog.admin import admin
 from blog.views.articles import articles_app
 from blog.views.auth import auth_app, login_manager
 from blog.views.authors import authors_app
@@ -22,6 +23,8 @@ def create_app() -> Flask:
 
     csrf = CSRFProtect()
     csrf.init_app(app)
+
+    admin.init_app(app)
 
     register_blueprints(app)
     register_commands(app)
