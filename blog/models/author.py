@@ -12,3 +12,6 @@ class Author(db.Model, UserMixin):
 
     user = relationship('User', back_populates='author')
     articles = relationship('Article', back_populates='author')
+
+    def __str__(self):
+        return self.user.username
