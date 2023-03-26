@@ -1,3 +1,4 @@
+from combojsonapi.permission import PermissionPlugin
 from flask import Flask
 from flask_combo_jsonapi import Api
 
@@ -28,6 +29,7 @@ def create_app() -> Flask:
     register_commands(app)
 
     from combojsonapi.spec import ApiSpecPlugin
+    from combojsonapi.event import EventPlugin
     api.plugins = [
         ApiSpecPlugin(
             app=app,
@@ -38,6 +40,8 @@ def create_app() -> Flask:
                 'Article': 'Article API',
             }
         ),
+        EventPlugin(),
+        PermissionPlugin(strict=False),
     ]
     api.init_app(app)
     register_api_routes(api)
