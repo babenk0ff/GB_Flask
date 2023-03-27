@@ -23,4 +23,7 @@
             {% endfor %}
         </div>
     {% endif %}
+    <div>
+        <a href="{{ url_for('articles_app.edit', article_id=article.id) }}">Edit</a>
+    </div>
 {% endblock %}
