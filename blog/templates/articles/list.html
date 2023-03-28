@@ -6,7 +6,7 @@
 
 {% block body %}
     {% if tag %}
-        With tag:
+        Articles with tag:
         <a href="{{ url_for('articles_app.list') }}">
             <span class="badge bg-info mb-3">
                 <span class="fw-light">x </span>
@@ -14,36 +14,36 @@
             </span>
         </a>
     {% endif %}
+    {% if author_name %}
+        Articles by {{ author_name }}:
+        <a href="{{ url_for('articles_app.list') }}">
+            <span class="badge bg-info mb-3">
+                <span class="fw-light">x </span>
+                <span class="text-dark">{{ author_name }}</span>
+            </span>
+        </a>
+    {% endif %}
     <div class="blog-content">
-        <div>
-            {% for article in articles %}
-                <h2 class="blog-post-title">
-                    {{ article.title }}
-                </h2>
-                <div class="blog-post-meta">
-                    {{ article.dt_created.strftime('%B %d, %Y') }} by <a
-                        href="{{ url_for('articles_app.list', author_id=article.author_id) }}">{{ article.author.user.username }}</a>
-                </div>
-                <div class="flex">
-                    <p class="blog-post-body">
-                        {{ article.body }}
-                    </p>
-                </div>
-                <span class="article-details-link">
+        {% for article in articles %}
+            <h2 class="blog-post-title">
+                {{ article.title }}
+            </h2>
+            <div class="blog-post-meta">
+                {{ article.created_at.strftime('%B %d, %Y') }} by <a
+                    {% set author_name = article.author.user.username %}
+                    href="{{ url_for('articles_app.list', author_name=author_name) }}">{{ author_name }}</a>
+            </div>
+            <div class="flex">
+                <p class="blog-post-body_short">
+                    {{ article.body }}
+                </p>
+            </div>
+            <span class="article-details-link">
                     <a href="{{ url_for('articles_app.details', article_id=article.id) }}">Continue reading</a>
                 </span>
-                <hr>
-            {% endfor %}
-        </div>
-        <span class="create-article-button button">
-            <a href="{{ url_for('articles_app.create') }}">Create new</a>
-        </span>
+            <hr>
+        {% endfor %}
+        <a href="{{ url_for('articles_app.create') }}"
+           class="create-article-button btn btn-secondary">Create new</a>
     </div>
 {% endblock %}
-
-
-
-{#<span id="ellipsis-ex" class="d-inline-block text-truncate" style="max-width: 150px;">#}
-{#    Praeterea iter est quasdam res quas ex communi.#}
-{#</span>#}
-

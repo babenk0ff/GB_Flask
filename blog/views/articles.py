@@ -6,7 +6,7 @@ from sqlalchemy.orm import joinedload
 from werkzeug.exceptions import NotFound, abort
 
 from blog.models.database import db
-from blog.models import Author, Article, Tag
+from blog.models import Author, Article, Tag, User
 from blog.forms.article import CreateArticleForm, EditArticleForm
 
 articles_app = Blueprint(
@@ -20,15 +20,19 @@ articles_app = Blueprint(
 @articles_app.route('/', endpoint='list')
 def articles_list():
     tag_name = request.args.get('tag')
-    author_id = request.args.get('author_id')
+    author_name = request.args.get('author_name')
     if tag_name:
         articles = Article.query.filter(Article.tags.any(name=tag_name))
-    elif author_id:
-        articles = Article.query.filter(Article.author_id == author_id)
+    elif author_name:
+        articles = (db.session.query(Article))\
+            .join(Author)\
+            .join(User)\
+            .filter(User.username == author_name)\
+            .all()
     else:
         articles = Article.query.all()
     return render_template('articles/list.html', articles=articles,
-                           tag=tag_name, author_id=author_id)
+                           tag=tag_name, author_name=author_name)
 
 
 @articles_app.route('/<int:article_id>/', endpoint='details')

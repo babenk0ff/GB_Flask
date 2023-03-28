@@ -1,4 +1,6 @@
 body {
+    display: flex;
+    flex-direction: column;
     font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", serif;
 }
 
@@ -43,7 +45,9 @@ a {
 .blog-post-body {
     display: inline-block;
     overflow: hidden;
-    /*max-height: 100px;*/
+}
+
+.blog-post-body_short {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -61,11 +65,13 @@ a {
     display: inline-block;
     margin-top: 10px;
 }
+.footer_background {
+    background-color: #212529!important;
+}
 
-/*.text-truncate {*/
-/*   display: inline-block;*/
-/*   max-width: 150px;*/
-/*   white-space: nowrap;*/
-/*   overflow: hidden;*/
-/*   text-overflow: ellipsis;*/
-/*}*/
+.blog-footer {
+    height: 100px;
+    margin-top: auto;
+    color: rgba(255,255,255,.55);
+    padding: 10px 0;
+}

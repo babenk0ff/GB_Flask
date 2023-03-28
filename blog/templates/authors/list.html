@@ -5,18 +5,37 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Authors</h1>
-    <div>
-        {% if authors %}
-            <ul>
+    <div class="blog-content">
+        <div>
+            {% if authors %}
+                {#                <ul>#}
+                {#                    {% for author in authors %}#}
+                {#                        <li>#}
+                {#                            #{{ author.id }} ({{ author.user.username }})#}
+                {#                        </li>#}
+                {#                    {% endfor %}#}
+                {#                </ul>#}
+                {#            {% else %}#}
+                {#                <h3>No authors yet</h3>#}
                 {% for author in authors %}
-                    <li>
-                        #{{ author.id }} ({{ author.user.username }})
-                    </li>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top"
+                             src="https://ui-avatars.com/api/?name{{ author.user.first_name }}+{{ author.user.last_name }}"
+                             alt="Avatar">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to
+                                build
+                                on the
+                                card title and make up the bulk of the card's
+                                content.</p>
+                            <a href="#" class="btn btn-primary">Go
+                                somewhere</a>
+                        </div>
+                    </div>
                 {% endfor %}
-            </ul>
-        {% else %}
-            <h3>No authors yet</h3>
-        {% endif %}
+            {% endif %}
+        </div>
+
     </div>
 {% endblock %}

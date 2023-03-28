@@ -35,22 +35,22 @@ class TagAdminView(CustomView):
 
 
 class UserAdminView(CustomView):
-    column_exclude_list = ("_password",)
+    column_exclude_list = ('_password',)
     column_searchable_list = (
-        "first_name",
-        "last_name",
-        "username",
-        "is_staff",
-        "email",
+        'first_name',
+        'last_name',
+        'username',
+        'is_staff',
+        'email',
     )
     column_filters = (
-        "first_name",
-        "last_name",
-        "username",
-        "is_staff",
-        "email",
+        'first_name',
+        'last_name',
+        'username',
+        'is_staff',
+        'email',
     )
-    column_editable_list = ("first_name", "last_name", "is_staff")
+    column_editable_list = ('first_name', 'last_name', 'is_staff')
     can_create = True
     can_edit = True
     can_delete = False
@@ -61,12 +61,18 @@ class AuthorAdminView(CustomView):
     column_labels = {'user.username': 'Username'}
 
 
+class ArticleAdminView(CustomView):
+    column_list = ('article.title',)
+    column_labels = {'article.title': 'Title'}
+
+
 admin = Admin(
     name='Blog Admin',
     template_mode='bootstrap4',
     index_view=MyAdminIndexView(),
 )
 
+admin.add_view(ArticleAdminView(models.Article, db.session, category='Models'))
 admin.add_view(TagAdminView(models.Tag, db.session, category='Models'))
 admin.add_view(AuthorAdminView(models.Author, db.session, category='Models'))
 admin.add_view(UserAdminView(models.User, db.session, category='Models'))
