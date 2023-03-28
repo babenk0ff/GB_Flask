@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Articles</h1>
     {% if tag %}
         With tag:
         <a href="{{ url_for('articles_app.list') }}">
@@ -15,16 +14,36 @@
             </span>
         </a>
     {% endif %}
-    <div>
-        <ul>
+    <div class="blog-content">
+        <div>
             {% for article in articles %}
-                <li>
-                    <a href="{{ url_for('articles_app.details', article_id=article.id) }}">{{ article.title }}</a>
-                    by {{ article.author.user.username }}
-                </li>
+                <h2 class="blog-post-title">
+                    {{ article.title }}
+                </h2>
+                <div class="blog-post-meta">
+                    {{ article.dt_created.strftime('%B %d, %Y') }} by <a
+                        href="{{ url_for('articles_app.list', author_id=article.author_id) }}">{{ article.author.user.username }}</a>
+                </div>
+                <div class="flex">
+                    <p class="blog-post-body">
+                        {{ article.body }}
+                    </p>
+                </div>
+                <span class="article-details-link">
+                    <a href="{{ url_for('articles_app.details', article_id=article.id) }}">Continue reading</a>
+                </span>
+                <hr>
             {% endfor %}
-        </ul>
-        <hr>
-        <a href="{{ url_for('articles_app.create') }}">Create new</a>
+        </div>
+        <span class="create-article-button button">
+            <a href="{{ url_for('articles_app.create') }}">Create new</a>
+        </span>
     </div>
 {% endblock %}
+
+
+
+{#<span id="ellipsis-ex" class="d-inline-block text-truncate" style="max-width: 150px;">#}
+{#    Praeterea iter est quasdam res quas ex communi.#}
+{#</span>#}
+

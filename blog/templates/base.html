@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/blog.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900" rel="stylesheet">
     <title>
         {% block title %}
         {% endblock %}
     </title>
+
 </head>
 <body>
 {% include 'navbar.html' %}
 
 <div class="container">
     {% block body %}
-        Hello base!
     {% endblock body %}
 </div>
 
