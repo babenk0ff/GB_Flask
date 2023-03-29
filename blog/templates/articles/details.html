@@ -1,29 +1,30 @@
 {% extends 'base.html' %}
-
-{% block title %}
-    Article #{{ article.id }}: {{ article.title }}
-{% endblock %}
+{% from 'macro/blog_post_meta.html' import blog_post_meta %}
 
 {% block body %}
-    <h1>{{ article.title }}</h1>
-    <div>
-        <p>{{ article.body }}</p>
-        <div class="text-secondary">Published {{ article.dt_created }}</div>
-        <div class="text-secondary">by {{ article.author.user.username }}</div>
-    </div>
-    {% if article.tags %}
-        <div>
-            Tags:
-            {% for tag in article.tags %}
-                <span>
-                    <a class="badge bg-info text-dark text-decoration-none"
+    <div class="blog-content">
+        <h2 class="blog-post-title">{{ article.title }}</h2>
+        {{ blog_post_meta(article) }}
+        <div class="flex">
+            <p class="blog-post-body">
+                {{ article.body }}
+            </p>
+        </div>
+        {% if article.tags %}
+            <div>
+                {% for tag in article.tags %}
+                    <span>
+                    <a class="badge bg-secondary text-light text-decoration-none blog-badge"
                        href="{{ url_for('articles_app.list', tag=tag.name) }}">{{ tag.name }}
                     </a>
                 </span>
-            {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <hr>
+        <div>
+                <a href="{{ url_for('articles_app.edit', article_id=article.id) }}"
+                class="btn btn-secondary">Edit article</a>
         </div>
-    {% endif %}
-    <div>
-        <a href="{{ url_for('articles_app.edit', article_id=article.id) }}">Edit</a>
     </div>
 {% endblock %}

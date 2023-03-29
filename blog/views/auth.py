@@ -1,11 +1,13 @@
-from flask import Blueprint, render_template, request, redirect, url_for, current_app
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask import Blueprint, render_template, request, redirect, url_for, \
+    current_app, abort
+from flask_admin.helpers import is_safe_url
+from flask_login import LoginManager, login_user, logout_user, \
+    login_required, current_user, login_url
 from sqlalchemy.exc import IntegrityError
 
 from blog.models.database import db
 from blog.forms.user import RegistrationForm, LoginForm
 from blog.models import User
-
 
 auth_app = Blueprint("auth_app", __name__)
 
@@ -20,7 +22,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return redirect(url_for("auth_app.login"))
+    return redirect(login_url('auth_app.login', request.url))
 
 
 @auth_app.route('/register/', methods=['GET', 'POST'], endpoint='register')
@@ -69,11 +71,17 @@ def login():
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).one_or_none()
         if user is None or not user.validate_password(form.password.data):
-            return render_template('auth/login.html', form=form, error='Check your credentials')
+            return render_template('auth/login.html', form=form,
+                                   error='Check your credentials')
 
         login_user(user)
-        return redirect(url_for('index_app.index'))
 
+        next_ = request.args.get('next')
+        if next_:
+            if not is_safe_url(next_):
+                return abort(400)
+
+        return redirect(next_ if next_ else url_for('index_app.index'))
     return render_template('auth/login.html', form=form)
 
 

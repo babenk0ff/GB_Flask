@@ -5,14 +5,33 @@
 {% endblock %}
 
 {% block body %}
-    <span>
-        <h2 class="mb-3">{{ user.first_name }} {{ user.last_name }}</h2>
-        {% if user.is_staff %}
-            <span class="badge bg-secondary">staff</span>
-        {% endif %}
-    </span>
-    <p class="mb-3">{{ user.email }}</p>
-    <div>
-        <a href="{{ url_for('users_app.list') }}">Back to users list</a>
+    <div class="blog-content" style="display: flex;justify-content: center;">
+        <div class="profile">
+            <img class="card-img-top"
+                 src="https://api.dicebear.com/6.x/avataaars/svg?seed={{ user.username }}"
+                 onerror="this.src='/static/img/avatar_default.png'"
+                 alt="Avatar"
+                 style="padding: 2rem"
+                 width="300">
+            <h2 class="mb-3">
+                {% if user.is_staff %}
+                    Administrator
+                {% else %}
+                    {% if user.first_name == None or user.last_name == None %}
+                        <br>
+                    {% else %}
+                        {{ user.first_name }} {{ user.last_name }}
+                    {% endif %}
+                {% endif %}
+            </h2>
+            {% if user.is_staff %}
+                <span class="badge bg-secondary mb-2">staff</span>
+            {% endif %}
+            <p class="mb-5">{{ user.email }}</p>
+            <div>
+                <a href="{{ url_for('users_app.list') }}">Back to users
+                    list</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

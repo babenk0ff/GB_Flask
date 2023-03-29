@@ -1,30 +1,51 @@
 {% extends 'base.html' %}
+{% from 'macro/blog_post_meta.html' import blog_post_meta %}
 
 {% block title %}
     Articles list
 {% endblock %}
 
 {% block body %}
-    <h1>Articles</h1>
-    {% if tag %}
-        With tag:
-        <a href="{{ url_for('articles_app.list') }}">
-            <span class="badge bg-info mb-3">
+    <div class="blog-content">
+        <h3 class="pb-4 mb-4 border-bottom" style="font-style: italic">
+            Articles
+            {% if author_name %}
+                {% if articles %}
+                    {% set user = articles[0].author.user %}
+                    {% if user.first_name == None or user.last_name == None %}
+                        by @{{ user.username }}:
+                    {% else %}
+                        by {{ user.first_name }} {{ user.last_name }}:
+                    {% endif %}
+                {% else %}
+                    by @{{ author_name }}:
+                {% endif %}
+            {% endif %}
+        </h3>
+        {% if tag %}
+            Articles with tag:
+            <a href="{{ url_for('articles_app.list') }}">
+            <span class="badge bg-secondary text-light text-decoration-none blog-badge">
                 <span class="fw-light">x </span>
-                <span class="text-dark">{{ tag }}</span>
+                <span class="text-light">{{ tag }}</span>
             </span>
-        </a>
-    {% endif %}
-    <div>
-        <ul>
-            {% for article in articles %}
-                <li>
-                    <a href="{{ url_for('articles_app.details', article_id=article.id) }}">{{ article.title }}</a>
-                    by {{ article.author.user.username }}
-                </li>
-            {% endfor %}
-        </ul>
+            </a>
+        {% endif %}
+        {% for article in articles %}
+            <div class="blog-post">
+                <h2 class="blog-post-title">
+                    {{ article.title }}
+                </h2>
+                {{ blog_post_meta(article) }}
+                <span class=".blog-post-body blog-post-body_short">{{ article.body }}</span>
+                <span class="article-details-link">
+                    <a href="{{ url_for('articles_app.details', article_id=article.id) }}">Continue reading</a>
+                </span>
+
+            </div>
+        {% endfor %}
         <hr>
-        <a href="{{ url_for('articles_app.create') }}">Create new</a>
+        <a href="{{ url_for('articles_app.create') }}"
+           class="create-article-button btn btn-secondary">Create new</a>
     </div>
 {% endblock %}

@@ -25,5 +25,4 @@ class EditArticleForm(FlaskForm):
         "Body",
         [validators.DataRequired()],
     )
-    tags = SelectMultipleField('Tags', coerce=int)
     submit = SubmitField("Save")

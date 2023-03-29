@@ -5,18 +5,37 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Authors</h1>
-    <div>
-        {% if authors %}
-            <ul>
+    <div class="blog-content">
+        <h3 class="pb-4 mb-4 border-bottom" style="font-style: italic">
+            Authors</h3>
+        <div class="card-block">
+            {% if authors %}
                 {% for author in authors %}
-                    <li>
-                        #{{ author.id }} ({{ author.user.username }})
-                    </li>
+                    <div class="card m-4" style="width: 15rem;">
+                        <img class="card-img-top"
+                             src="https://api.dicebear.com/6.x/avataaars/svg?seed={{ author.user.username }}"
+                             onerror="this.src='/static/img/avatar_default.png'"
+                             alt="Avatar"
+                             style="padding: 2rem">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {% if author.user.first_name == None or author.user.last_name == None %}
+                                    <br>
+                                {% else %}
+                                    {{ author.user.first_name }}
+                                    {{ author.user.last_name }}
+                                {% endif %}
+                            </h5>
+                            <p class="card-text">
+                                <a href="{{ url_for('users_app.details', user_id=author.user.id) }}">@{{ author.user.username }}</a>
+                            </p>
+                            <a href="{{ url_for('articles_app.list', author_name=author.user.username) }}"
+                               class="btn btn-primary">View articles</a>
+                        </div>
+                    </div>
                 {% endfor %}
-            </ul>
-        {% else %}
-            <h3>No authors yet</h3>
-        {% endif %}
+            {% endif %}
+        </div>
+
     </div>
 {% endblock %}

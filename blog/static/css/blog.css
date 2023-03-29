@@ -1,0 +1,90 @@
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", serif;
+}
+
+@media (min-width: 1400px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 1140px
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.blog-content {
+    padding-top: 1rem;
+}
+
+.blog-post {
+    margin-bottom: 5rem;
+}
+
+.blog-header-logo {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.blog-post-title {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+    margin-bottom: .25rem;
+    font-size: 2.5rem;
+    text-decoration: none;
+    color: black;
+}
+
+.blog-post-meta {
+    margin-bottom: 1.25rem;
+    color: #999;
+}
+
+.blog-post-body {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.blog-post-body_short {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+}
+
+.create-article-button {
+    display: inline-block;
+    margin: 15px 0;
+}
+
+.article-details-link {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.blog-badge {
+    font-weight: 400;
+}
+
+.card-block {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile {
+    width: 30rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+}
