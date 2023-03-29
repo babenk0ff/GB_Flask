@@ -15,12 +15,20 @@ body {
     }
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
 a {
     text-decoration: none;
 }
 
 .blog-content {
-    padding-top: 1.5rem;
+    padding-top: 1rem;
+}
+
+.blog-post {
+    margin-bottom: 5rem;
 }
 
 .blog-header-logo {
@@ -50,10 +58,8 @@ a {
 .blog-post-body_short {
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-.flex {
-    display: flex;
+    overflow: hidden;
+    display: block;
 }
 
 .create-article-button {
@@ -65,13 +71,20 @@ a {
     display: inline-block;
     margin-top: 10px;
 }
-.footer_background {
-    background-color: #212529!important;
+
+.blog-badge {
+    font-weight: 400;
 }
 
-.blog-footer {
-    height: 100px;
-    margin-top: auto;
-    color: rgba(255,255,255,.55);
-    padding: 10px 0;
+.card-block {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile {
+    width: 30rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
 }

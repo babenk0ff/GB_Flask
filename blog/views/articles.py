@@ -31,8 +31,11 @@ def articles_list():
             .all()
     else:
         articles = Article.query.all()
-    return render_template('articles/list.html', articles=articles,
-                           tag=tag_name, author_name=author_name)
+    return render_template('articles/list.html',
+                           articles=articles,
+                           tag=tag_name,
+                           author_name=author_name
+                           )
 
 
 @articles_app.route('/<int:article_id>/', endpoint='details')

@@ -1,0 +1,13 @@
+{% macro blog_post_meta(article) %}
+    <div class="blog-post-meta">
+        {{ article.created_at.strftime('%B %d, %Y') }} by <a
+            {% set user = article.author.user %}
+            href="{{ url_for('articles_app.list', author_name=user.username) }}">
+        {% if user.first_name == None or user.last_name == None %}
+            @{{ user.username }}
+        {% else %}
+            {{ user.first_name }} {{ user.last_name }}
+        {% endif %}
+    </a>
+    </div>
+{% endmacro %}

@@ -62,8 +62,13 @@ class AuthorAdminView(CustomView):
 
 
 class ArticleAdminView(CustomView):
-    column_list = ('article.title',)
-    column_labels = {'article.title': 'Title'}
+    column_list = ('title', 'author')
+    column_labels = {
+        'article.title': 'Title',
+        'article.author': 'Author',
+    }
+    can_delete = True
+    edit_modal = True
 
 
 admin = Admin(
