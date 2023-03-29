@@ -1,48 +1,50 @@
 {% extends 'base.html' %}
+{% from 'macro/blog_post_meta.html' import blog_post_meta %}
 
 {% block title %}
     Articles list
 {% endblock %}
 
 {% block body %}
-    {% if tag %}
-        Articles with tag:
-        <a href="{{ url_for('articles_app.list') }}">
-            <span class="badge bg-info mb-3">
-                <span class="fw-light">x </span>
-                <span class="text-dark">{{ tag }}</span>
-            </span>
-        </a>
-    {% endif %}
-    {% if author_name %}
-        Articles by {{ author_name }}:
-        <a href="{{ url_for('articles_app.list') }}">
-            <span class="badge bg-info mb-3">
-                <span class="fw-light">x </span>
-                <span class="text-dark">{{ author_name }}</span>
-            </span>
-        </a>
-    {% endif %}
     <div class="blog-content">
+        <h3 class="pb-4 mb-4 border-bottom" style="font-style: italic">
+            Articles
+            {% if author_name %}
+                {% if articles %}
+                    {% set user = articles[0].author.user %}
+                    {% if user.first_name == None or user.last_name == None %}
+                        by @{{ user.username }}:
+                    {% else %}
+                        by {{ user.first_name }} {{ user.last_name }}:
+                    {% endif %}
+                {% else %}
+                    by @{{ author_name }}:
+                {% endif %}
+            {% endif %}
+        </h3>
+        {% if tag %}
+            Articles with tag:
+            <a href="{{ url_for('articles_app.list') }}">
+            <span class="badge bg-secondary text-light text-decoration-none blog-badge">
+                <span class="fw-light">x </span>
+                <span class="text-light">{{ tag }}</span>
+            </span>
+            </a>
+        {% endif %}
         {% for article in articles %}
-            <h2 class="blog-post-title">
-                {{ article.title }}
-            </h2>
-            <div class="blog-post-meta">
-                {{ article.created_at.strftime('%B %d, %Y') }} by <a
-                    {% set author_name = article.author.user.username %}
-                    href="{{ url_for('articles_app.list', author_name=author_name) }}">{{ author_name }}</a>
-            </div>
-            <div class="flex">
-                <p class="blog-post-body_short">
-                    {{ article.body }}
-                </p>
-            </div>
-            <span class="article-details-link">
+            <div class="blog-post">
+                <h2 class="blog-post-title">
+                    {{ article.title }}
+                </h2>
+                {{ blog_post_meta(article) }}
+                <span class=".blog-post-body blog-post-body_short">{{ article.body }}</span>
+                <span class="article-details-link">
                     <a href="{{ url_for('articles_app.details', article_id=article.id) }}">Continue reading</a>
                 </span>
-            <hr>
+
+            </div>
         {% endfor %}
+        <hr>
         <a href="{{ url_for('articles_app.create') }}"
            class="create-article-button btn btn-secondary">Create new</a>
     </div>
